@@ -1,4 +1,4 @@
-<x-layouts.frontend :title="__('Homepage')">
+<x-layouts.frontend >
 <div class="min-h-screen bg-black text-purple-200">
         <div class="container mx-auto flex justify-center items-center py-24">
             <div class="relative max-w-2xl w-full px-8 py-16 rounded-3xl flex flex-col items-center bg-gradient-to-br from-black via-gray-900 to-purple-950 border border-purple-700/60 shadow-2xl">
