@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
+use App\Models\QuoteRequest;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 
@@ -17,12 +19,22 @@ class ContactController extends Controller
             'message' => 'nullable|string',
         ]);
 
-        // Example: Log the request or send an email (customize as needed)
-        Log::info('Contact form submitted', $validated);
+    // Save the quote request to the database
+    $quote = QuoteRequest::create(
+        [
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'service' => $request['service'],
+            'message' => $request['message'] ?? null,
+        ]
+    );
 
-        // Optionally, send an email notification here
-        // Mail::to(config('mail.from.address'))->send(new ContactFormMail($validated));
+    // Debug: Log the created model and check if it has an ID
+    Log::info('Quote request created', ['model' => $quote, 'attributes' => $quote->getAttributes()]);
 
-        return redirect('/')->with('success', 'Thank you for your request! We will contact you soon.');
+    // Optionally, log or send an email notification here
+    // Mail::to(config('mail.from.address'))->send(new ContactFormMail($validated));
+
+    return redirect('/')->with('success', 'Thank you for your request! We will contact you soon.');
     }
 }
